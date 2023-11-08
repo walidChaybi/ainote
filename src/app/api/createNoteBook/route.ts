@@ -5,8 +5,6 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
-export const runtime = "edge";
-
 export async function POST(req: Request) {
   const { userId } = auth();
   if (!userId) {
@@ -27,7 +25,7 @@ export async function POST(req: Request) {
         input: {
           width: 512,
           height: 512,
-          prompt: `minimalistic colorful thumbnail for a notebook of ${name}`,
+          prompt: `minimalistic colorful thumbnail for a notebook app of ${name}`,
           refine: "expert_ensemble_refiner",
           scheduler: "KarrasDPM",
           num_outputs: 1,
