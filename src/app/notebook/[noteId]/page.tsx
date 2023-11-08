@@ -13,6 +13,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import TipTapEditor from "@/components/TipTapEditor";
+import { ArrowLeft } from "lucide-react";
+import delay from "delay";
 
 type Props = {
   params: { noteId: string };
@@ -37,7 +39,8 @@ export default async function NotebookPage({ params: { noteId } }: Props) {
       <div className="max-w-4xl mx-auto">
         <div className="border shadow-xl border-stone-200 rounded-lg p-4 flex items-center">
           <Link href="/dashboard">
-            <Button size="sm" className="bg-teal-400">
+            <Button size="sm" className="bg-blue-400">
+              <ArrowLeft className="w-4 h-4" />
               Back
             </Button>
           </Link>
@@ -57,8 +60,8 @@ export default async function NotebookPage({ params: { noteId } }: Props) {
           <div className="ml-auto">Delete</div>
         </div>
         <div className="h-4"></div>
-        <div className="border-stone-200 shadow-xl border rounded-lg px-16 py-8 w-full ">
-          <TipTapEditor />
+        <div className="border-stone-200 shadow-xl border-2 rounded-lg px-16 py-8 w-full ">
+          <TipTapEditor note={note} />
         </div>
       </div>
     </div>

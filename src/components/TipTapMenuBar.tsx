@@ -59,6 +59,7 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
   const renderedColors = Colors.map((color) => {
     return (
       <div
+        key={color.color}
         onClick={() => editor.chain().focus().setColor(color.color).run()}
         className={`w-6 h-6 rounded-full ${color.tailwindColor} flex justify-center items-center text-white cursor-pointer hover:scale-110 transform transition-all`}
       >
@@ -73,31 +74,34 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "is-active" : ""}
+          className={editor.isActive("bold") ? "is-active" : " inactive "}
         >
           <Bold />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "is-active" : ""}
+          className={editor.isActive("italic") ? "is-active" : "inactive"}
         >
           <Italic />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
-          className={editor.isActive("strike") ? "is-active" : ""}
+          className={editor.isActive("strike") ? "is-active" : "inactive"}
         >
           <Strikethrough />
         </button>
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+        <button
+          onClick={() => editor.chain().focus().unsetAllMarks().run()}
+          className="inactive"
+        >
           <RemoveFormatting />
         </button>
         <button
           onClick={() => editor.commands.setHeading({ level: 1 })}
           className={
-            editor.isActive("heading", { level: 1 }) ? "is-active" : ""
+            editor.isActive("heading", { level: 1 }) ? "is-active" : "inactive"
           }
         >
           <Heading1 />
@@ -107,7 +111,7 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
           className={
-            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+            editor.isActive("heading", { level: 2 }) ? "is-active" : "inactive"
           }
         >
           <Heading2 />
@@ -117,7 +121,7 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
           className={
-            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+            editor.isActive("heading", { level: 3 }) ? "is-active" : "inactive"
           }
         >
           <Heading3 />
@@ -127,49 +131,52 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
           className={
-            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+            editor.isActive("heading", { level: 4 }) ? "is-active" : "inactive"
           }
         >
           <Heading4 />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "is-active" : ""}
+          className={editor.isActive("bulletList") ? "is-active" : "inactive"}
         >
           <List />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive("orderedList") ? "is-active" : ""}
+          className={editor.isActive("orderedList") ? "is-active" : "inactive"}
         >
           <ListOrdered />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive("codeBlock") ? "is-active" : ""}
+          className={editor.isActive("codeBlock") ? "is-active" : "inactive"}
         >
           <FileCode2 />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "is-active" : ""}
+          className={editor.isActive("blockquote") ? "is-active" : "inactive"}
         >
           <Quote />
         </button>
         <button
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          className="inactive"
         >
           <FlipVertical2 />
         </button>
         <button
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
+          className="hover:bg-orange-400 p-2 rounded-full"
         >
           <Undo2 />
         </button>
         <button
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
+          className="hover:bg-orange-400 p-2 rounded-full"
         >
           <Redo2 />
         </button>
