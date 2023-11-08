@@ -21,10 +21,19 @@ export default function CreateNoteDialog() {
   const router = useRouter();
   const { toast } = useToast();
 
+  // mutation to hit the create api /api/createNoteBook
   const createNoteBook = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/createNoteBook", {
         name: input,
+      });
+      return response.data;
+    },
+  });
+  const uploadToFirebase = useMutation({
+    mutationFn: async (noteId) => {
+      const response = await axios.post("/api/uploadToFirebase", {
+        noteId,
       });
       return response.data;
     },
@@ -41,7 +50,7 @@ export default function CreateNoteDialog() {
           description: "You can now add notes to this note book",
           status: "success",
         });
-
+        uploadToFirebase.mutate(note_id);
         router.push(`/notebook/${note_id}`);
       },
       onError: (error) => {

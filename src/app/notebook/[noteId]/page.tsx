@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import TipTapEditor from "@/components/TipTapEditor";
 import { ArrowLeft } from "lucide-react";
-import delay from "delay";
+import DeleteButton from "@/components/DeleteButton";
 
 type Props = {
   params: { noteId: string };
@@ -57,7 +57,7 @@ export default async function NotebookPage({ params: { noteId } }: Props) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="ml-auto">Delete</div>
+          <DeleteButton noteId={note.id} />
         </div>
         <div className="h-4"></div>
         <div className="border-stone-200 shadow-xl border-2 rounded-lg px-16 py-8 w-full ">

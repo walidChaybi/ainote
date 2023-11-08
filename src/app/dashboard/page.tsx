@@ -1,12 +1,22 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import { BsArrowBarLeft } from "react-icons/bs";
 import { Separator } from "@/components/ui/separator";
 import CreateNoteDialog from "@/components/CreateNoteDialog";
+import { db } from "@/lib/db";
+import { $notes } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
 
-export default function Page() {
+export default async function Page() {
+  const { userId } = auth();
+  const notes = await db
+    .select()
+    .from($notes)
+    .where(eq($notes.userId, userId!));
+
   return (
     <>
       <div className="grain min-h-screen">
@@ -31,13 +41,39 @@ export default function Page() {
           <div className="h-8"></div>
           {/* list of notes*/}
           {/* conditionally render */}
-          <div className="text-center">
-            <h2 className="text-xl text-gray-500">You have no notes yet</h2>
-          </div>
+
+          {notes.length === 0 && (
+            <div className="text-center">
+              <h2 className="text-xl text-gray-500">You have no notes yet</h2>
+            </div>
+          )}
 
           {/* display all notes*/}
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
             <CreateNoteDialog />
+            {notes.map((note) => {
+              return (
+                <Link href={`/notebook/${note.id}`}>
+                  <div className="note border border-stone-200 rounded-lg overflow-hidden flex flex-col transition hover:-translate-y-1">
+                    <Image
+                      width={400}
+                      height={200}
+                      alt={note.name}
+                      src={note.imageUrl}
+                    />
+                    <div className="p-4 bg-white info">
+                      <h3 className="text-xl font-semibold text-gray-800">
+                        {note.name}
+                      </h3>
+                      <div className="h-1"></div>
+                      <p className="text-sm text-gray-500">
+                        {new Date(note.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

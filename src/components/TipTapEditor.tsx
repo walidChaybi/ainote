@@ -112,9 +112,13 @@ export default function TipTapEditor({ note }) {
         </Button>
       </div>
       <div className="h-8"></div>
-      <div>
+      <div className="w-full mt-4">
         <EditorContent editor={editor} />
       </div>
+      <div className="h-4"></div>
+      <span>
+        Tip: Press <kbd>Ctrl</kbd> + <kbd>Space</kbd> for AI autocomplete
+      </span>
     </>
   );
 }
